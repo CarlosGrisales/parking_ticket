@@ -19,6 +19,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
     return Dialog(
       elevation: 0,
       backgroundColor: Colors.deepOrange,
+      
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),

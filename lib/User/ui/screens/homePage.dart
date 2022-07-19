@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:parking_ticket/User/ui/screens/registrarVehiculo.dart';
 import 'package:parking_ticket/User/ui/screens/sign_in_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import '../../../main.dart';
+
+Future <void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp( MyApp());
+}
+
+
 
 class Homepage extends StatelessWidget {
   double screenHeight = 0, screenWidth = 0;
@@ -9,81 +20,83 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-            alignment: Alignment.topLeft,
-            child: IconButton(
-              onPressed: () {
-                Navigator.pop(
-                    context,
-                    MaterialPageRoute(
-                      builder: ((context) => SignInScreen()),
-                    ));
-              },
-              icon: Icon(
-                Icons.cancel_sharp,
-                color: Color.fromARGB(255, 140, 139, 223),
+    return Material(
+      child: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => SignInScreen()),
+                      ));
+                },
+                icon: Icon(
+                  Icons.cancel_sharp,
+                  color: Color.fromARGB(255, 140, 139, 223),
+                ),
+                iconSize: screenHeight * 0.030,
               ),
-              iconSize: screenHeight * 0.030,
             ),
-          ),
-              Container(
-                width: screenWidth * 0.4,
-                height: screenHeight * 0.15,
-                /* color: Colors.yellow, */
-                child: Image.asset(
-                  'assets/img/mpos.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ],
-          ),
-          Stack(
-            children: [
-              Center(
-                child: Container(
-                  height: screenHeight * 0.4,
-                  width: screenWidth * 0.8,
-                  decoration: BoxDecoration(
-                    color: Colors.deepOrange,
-                    border: Border.all(color: Colors.white54, width: (2)),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: Colors.black45,
-                        blurRadius: 03,
-                        offset: Offset(0, 1),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      textTitle('App Para Valet Parking'),
-                      SizedBox(
-                        height: screenHeight * 0.05,
-                      ),
-                      textinfo(
-                          'Descripción del rol operativo Usuario habilitado para gestionar el ingreso y salida de vehículos, recaudando y facturando a los clientes.')
-                    ],
+                Container(
+                  width: screenWidth * 0.4,
+                  height: screenHeight * 0.15,
+                  /* color: Colors.yellow, */
+                  child: Image.asset(
+                    'assets/img/mpos.png',
+                    fit: BoxFit.contain,
                   ),
                 ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: screenHeight * 0.05,
-          ),
-          Container(
-            child: bottonLogin(),
-          )
-        ],
+              ],
+            ),
+            Stack(
+              children: [
+                Center(
+                  child: Container(
+                    height: screenHeight * 0.4,
+                    width: screenWidth * 0.8,
+                    decoration: BoxDecoration(
+                      color: Colors.deepOrange,
+                      border: Border.all(color: Colors.white54, width: (2)),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          color: Colors.black45,
+                          blurRadius: 03,
+                          offset: Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        textTitle('App Para Valet Parking'),
+                        SizedBox(
+                          height: screenHeight * 0.05,
+                        ),
+                        textinfo(
+                            'Descripción del rol operativo Usuario habilitado para gestionar el ingreso y salida de vehículos, recaudando y facturando a los clientes.')
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: screenHeight * 0.05,
+            ),
+            Container(
+              child: bottonLogin(),
+            )
+          ],
+        ),
       ),
     );
   }

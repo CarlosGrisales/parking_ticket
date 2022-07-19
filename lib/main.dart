@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
@@ -8,9 +9,12 @@ import 'package:parking_ticket/User/ui/screens/homePage.dart';
 import 'package:parking_ticket/User/ui/screens/registrarVehiculo.dart';
 import 'package:parking_ticket/User/ui/screens/salidaVehiculo.dart';
 import 'package:parking_ticket/User/ui/screens/sign_in_screen.dart';
-import 'package:parking_ticket/parking/bloc/bloc_parking.dart';
 
-void main() {
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+  );
   runApp(const MyApp());
 }
 
@@ -20,11 +24,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        child: MaterialApp(
+        child:  MaterialApp(
           title: 'Flutter Demo',
-          home: SignInScreen(),
+          home:  SignInScreen(),
         ),
-        bloc: UserBloc());
+        bloc: UserBloc(),);
   }
 }
 
@@ -46,18 +50,18 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) => Scaffold(
     body: screen[index],
         bottomNavigationBar: NavigationBarTheme(
-          data: NavigationBarThemeData(
+          data: const NavigationBarThemeData(
             indicatorColor: Colors.blue,
           ),
-          child: NavigationBar(
+          child:  NavigationBar(
             height: 60,
             backgroundColor: Colors.deepOrange,
             selectedIndex: index,
             onDestinationSelected: (index)=> setState(()=>
               this.index = index
             ),
-            destinations: [
-              NavigationDestination(
+            destinations: const [
+               NavigationDestination(
                 icon: Icon(Icons.car_rental),
                 label: 'Ingreso',
               ),

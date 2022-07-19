@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
@@ -20,8 +23,28 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreen extends State<SignInScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   late UserBloc userBloc;
   double screenHeight = 0, screenWidth = 0;
+
+  @override
+  dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Firebase.initializeApp().whenComplete(() {
+      print("completed");
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
@@ -31,44 +54,46 @@ class _SignInScreen extends State<SignInScreen> {
   }
 
   Widget signInGoogleUI() {
-    return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          GradientBack(height: screenHeight * 1),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Flexible(
-                  child: Container(
-                    width: screenWidth * 0.5,
-                    child: Text(
-                      "Bienvenido",
-                      style: TextStyle(
-                          fontSize: 30.0,
-                          fontFamily: "Lato",
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+    return Material(
+      child: Scaffold(
+        body: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            GradientBack(height: screenHeight * 1),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Flexible(
+                    child: Container(
+                      width: screenWidth * 0.5,
+                      child: Text(
+                        "Bienvenido",
+                        style: TextStyle(
+                            fontSize: 30.0,
+                            fontFamily: "Lato",
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: screenHeight * 0.05),
-                _userTextField(),
-                SizedBox(height: screenHeight * 0.05),
-                _passwoerTextField(),
-                SizedBox(height: screenHeight * 0.05),
-                _bottonLogin(),
-                SizedBox(height: screenHeight * 0.05),
-                /*    ButtonGreen(
-                     text: "Login",
-                    onPressed: () {},
-                    width: screenWidth * 0.4,
-                    height: screenHeight * 0.05) */
-              ],
+                  SizedBox(height: screenHeight * 0.05),
+                  _userTextField(),
+                  SizedBox(height: screenHeight * 0.05),
+                  _passwoerTextField(),
+                  SizedBox(height: screenHeight * 0.05),
+                  _bottonLogin(),
+                  SizedBox(height: screenHeight * 0.05),
+                  /*    ButtonGreen(
+                       text: "Login",
+                      onPressed: () {},
+                      width: screenWidth * 0.4,
+                      height: screenHeight * 0.05) */
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -81,11 +106,12 @@ class _SignInScreen extends State<SignInScreen> {
           horizontal: 40,
         ),
         child: TextField(
+          controller: emailController,
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             icon: Icon(Icons.person),
             /* hintText: 'Nombre', */
-            labelText: 'Nombre',
+            labelText: 'Correo',
           ),
           onChanged: (value) {},
         ),
@@ -101,6 +127,7 @@ class _SignInScreen extends State<SignInScreen> {
           horizontal: 40,
         ),
         child: TextField(
+          controller: passwordController,
           keyboardType: TextInputType.name,
           obscureText: true,
           decoration: InputDecoration(
@@ -142,11 +169,7 @@ class _SignInScreen extends State<SignInScreen> {
         ),
         onPressed: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: ((context) => MyHomePage()),
-            ),
-          );
+              context, MaterialPageRoute(builder: (context) => Homepage()));
         },
       );
     });
