@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "374227294298",
+    "project_id": "parking-ticket-d483f",
+    "storage_bucket": "parking-ticket-d483f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374227294298:android:0f23e66175e3b0849c6063",
+        "android_client_info": {
+          "package_name": "com.example.parking_ticket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "374227294298-ociguuf1tb0ibldbglommqfvnl2tueaa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.parking_ticket",
+            "certificate_hash": "ac0c3538ce26ea5143394ad8c4bde295f0d12486"
+          }
+        },
+        {
+          "client_id": "374227294298-141cnuo8r28h95v117ro5hc4cioqm9k5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBliU2DBRayGmdn7h8iOFIrVTd0ICHtzdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "374227294298-141cnuo8r28h95v117ro5hc4cioqm9k5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
