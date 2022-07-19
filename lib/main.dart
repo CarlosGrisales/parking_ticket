@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:parking_ticket/User/bloc/bloc_user.dart';
+import 'package:parking_ticket/parking/bloc/bloc_parking.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -9,44 +14,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+    return BlocProvider(child: MaterialApp(title:  'Flutter Demo', home: MyHomePage(),), bloc: UserBloc());
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
+ 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  void _incrementCounter() {
-    setState(() {
-
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-
-        title: Text(widget.title),
       ),
       body: Center(
-        child: Text('aplicacion tickets')
+        child: Text('aplicacion ticketes')
      
       ));
       
