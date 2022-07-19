@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:parking_ticket/User/ui/screens/registrarVehiculo.dart';
+import 'package:parking_ticket/User/ui/screens/salidaVehiculo.dart';
 import 'package:parking_ticket/main.dart';
 import '../../../widgets/button_green.dart';
 import '../../../widgets/gradient_black.dart';
@@ -143,7 +144,7 @@ class _SignInScreen extends State<SignInScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: ((context) => RegistarVehiculo()),
+              builder: ((context) => SalidaVehiculo()),
             ),
           );
         },

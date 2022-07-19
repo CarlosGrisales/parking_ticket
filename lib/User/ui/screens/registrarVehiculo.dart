@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parking_ticket/User/ui/screens/homePage.dart';
 
 class RegistarVehiculo extends StatelessWidget {
-   double screenHeight = 0, screenWidth = 0;
+  double screenHeight = 0, screenWidth = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -12,45 +12,48 @@ class RegistarVehiculo extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Stack(children: [
-            Center(
-              child: Container(
-                height: screenHeight * 0.4,
-                width: screenWidth * 0.8,
-                decoration: BoxDecoration(
-                  color: Colors.deepOrange,
-                  border: Border.all(color: Colors.white54, width: (2)),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Colors.black45,
-                      blurRadius: 03,
-                      offset: Offset(0, 1),
-                    ),
-                  ],
+          Stack(
+            children: [
+              Center(
+                child: Container(
+                  height: screenHeight * 0.4,
+                  width: screenWidth * 0.8,
+                  decoration: BoxDecoration(
+                    color: Colors.deepOrange,
+                    border: Border.all(color: Colors.white54, width: (2)),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.black45,
+                        blurRadius: 03,
+                        offset: Offset(0, 1),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      textTitle('INGRESO DE VEHICULO'),
+                      SizedBox(
+                        height: screenHeight * 0.03,
+                      ),
+                      _placaTextField(),
+                      _conductorTextField(),
+                      _horaIngresoTextField(),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    textTitle('INGRESO DE VEHICULO'),
-                    SizedBox(
-                      height: screenHeight * 0.03,
-                    ),
-                   _placaTextField(),
-                   _conductorTextField(),
-                   _horaIngresoTextField(),
-                  ],
-                ),
-              ),
-            )
-          ],),
-           SizedBox(
-                      height: screenHeight * 0.05,),
-          Container (child: bottonLogin() ,)
+              )
+            ],
+          ),
+          SizedBox(
+            height: screenHeight * 0.05,
+          ),
+          Container(
+            child: bottonLogin(),
+          )
         ],
       ),
-      
-      
     );
   }
 
@@ -67,7 +70,7 @@ class RegistarVehiculo extends StatelessWidget {
     );
   }
 
- Widget _placaTextField() {
+  Widget _placaTextField() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
@@ -87,8 +90,8 @@ class RegistarVehiculo extends StatelessWidget {
     });
   }
 
-    _conductorTextField() {
-      return StreamBuilder(
+  _conductorTextField() {
+    return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         padding: EdgeInsets.symmetric(
@@ -105,10 +108,10 @@ class RegistarVehiculo extends StatelessWidget {
         ),
       );
     });
-    }
+  }
 
-    _horaIngresoTextField() {
-         return StreamBuilder(
+  _horaIngresoTextField() {
+    return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
         padding: EdgeInsets.symmetric(
@@ -125,14 +128,7 @@ class RegistarVehiculo extends StatelessWidget {
         ),
       );
     });
-    }
-
-  
-
-
-
-
-
+  }
 
   Widget bottonLogin() {
     return StreamBuilder(
@@ -171,8 +167,4 @@ class RegistarVehiculo extends StatelessWidget {
       );
     });
   }
-  
-  
-  
-
 }
