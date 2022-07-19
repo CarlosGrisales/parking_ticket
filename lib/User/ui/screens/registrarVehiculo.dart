@@ -6,68 +6,135 @@ class RegistarVehiculo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        screenWidth = MediaQuery.of(context).size.width;
+    screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Stack(children: [
-        Center(
-          child: Container(
-            height: screenHeight * 0.4,
-            width: screenWidth * 0.8,
-             decoration: BoxDecoration(
-        color: Colors.deepOrange,
-        border: Border.all(color: Colors.white54, width: (2)),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.black45,
-            blurRadius: 03,
-            offset: Offset(0, 1),
-          ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Stack(children: [
+            Center(
+              child: Container(
+                height: screenHeight * 0.4,
+                width: screenWidth * 0.8,
+                decoration: BoxDecoration(
+                  color: Colors.deepOrange,
+                  border: Border.all(color: Colors.white54, width: (2)),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.black45,
+                      blurRadius: 03,
+                      offset: Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    textTitle('INGRESO DE VEHICULO'),
+                    SizedBox(
+                      height: screenHeight * 0.03,
+                    ),
+                   _placaTextField(),
+                   _conductorTextField(),
+                   _horaIngresoTextField(),
+                  ],
+                ),
+              ),
+            )
+          ],),
+           SizedBox(
+                      height: screenHeight * 0.05,),
+          Container (child: bottonLogin() ,)
         ],
       ),
-            child: Column(mainAxisAlignment: MainAxisAlignment.center ,
-              children: [
-                
-                textTitle('App Para Valet Parking'),
-                SizedBox(height: screenHeight * 0.05,),
-                textinfo('Descripción del rol operativo Usuario habilitado para gestionar el ingreso y salida de vehículos, recaudando y facturando a los clientes.')
-            
-              ],
-            ),
-          ),
-        )
-      ]),
+      
+      
     );
-    
   }
 
-  Container textTitle(String title){
-  return Container(
-    child:Text(
-                  title,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: screenHeight * 0.020,
-                      fontWeight: FontWeight.bold), textAlign: TextAlign.center,
-                ),);
-}
+  Container textTitle(String title) {
+    return Container(
+      child: Text(
+        title,
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: screenHeight * 0.020,
+            fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
 
-Container textinfo(String info){
+ Widget _placaTextField() {
+    return StreamBuilder(
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 40,
+        ),
+        child: TextField(
+          keyboardType: TextInputType.name,
+          decoration: InputDecoration(
+            icon: Icon(Icons.time_to_leave),
+            /* hintText: 'Nombre', */
+            labelText: 'Placa',
+          ),
+          onChanged: (value) {},
+        ),
+      );
+    });
+  }
 
-  return Container(
-    height: screenHeight * 0.1,
-    width: screenWidth * 0.6,
-    child:Text(
-                  info,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: screenHeight * 0.015,
-                      fontWeight: FontWeight.bold), textAlign: TextAlign.center,
-                ),);
-}
+    _conductorTextField() {
+      return StreamBuilder(
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 40,
+        ),
+        child: TextField(
+          keyboardType: TextInputType.name,
+          decoration: InputDecoration(
+            icon: Icon(Icons.person),
+            /* hintText: 'Nombre', */
+            labelText: 'Conductor',
+          ),
+          onChanged: (value) {},
+        ),
+      );
+    });
+    }
 
- Widget _bottonLogin() {
+    _horaIngresoTextField() {
+         return StreamBuilder(
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 40,
+        ),
+        child: TextField(
+          keyboardType: TextInputType.datetime,
+          decoration: InputDecoration(
+            icon: Icon(Icons.timelapse),
+            /* hintText: 'Nombre', */
+            labelText: 'Hora ingreso',
+          ),
+          onChanged: (value) {},
+        ),
+      );
+    });
+    }
+
+  
+
+
+
+
+
+
+  Widget bottonLogin() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return TextButton(
@@ -86,7 +153,7 @@ Container textinfo(String info){
           ),
           padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15.0),
           child: Text(
-            'Registrar Vehiculo',
+            'Registrar Ingreso',
             style: TextStyle(
               color: Colors.white,
               fontFamily: "Lato",
@@ -97,11 +164,15 @@ Container textinfo(String info){
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: ((context) => Homepage()),
+              builder: ((context) => RegistarVehiculo()),
             ),
           );
         },
       );
     });
   }
+  
+  
+  
+
 }
