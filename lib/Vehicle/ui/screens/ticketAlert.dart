@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:parking_ticket/Vehicle/model/vehiculos.dart';
 
 class CustomAlertDialog extends StatefulWidget {
   const CustomAlertDialog({
     Key? key,
     required this.title,
     required this.description,
+    required this.vehicle,
   }) : super(key: key);
 
   final String title, description;
+  final Vehicle vehicle;
 
   @override
   _CustomAlertDialogState createState() => _CustomAlertDialogState();
@@ -40,8 +43,8 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
           Divider(
             height: 1,
           ),
-          Text('placa:'),
-          Text('Conductor:'),
+          Text('placa: ${widget.vehicle.placa}'),
+          Text('Conductor: ${widget.vehicle.cedulaConductor}'),
           Text('Hora de Entrada:'),
           Text('Hora de saluda:'),
           Text('Tiempo total:'),

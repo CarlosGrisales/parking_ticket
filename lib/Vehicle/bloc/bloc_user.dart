@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
-import 'package:parking_ticket/User/model/userVP.dart';
-import 'package:parking_ticket/User/model/vehiculos.dart';
 
+import '../model/vehiculos.dart';
 import '../repository/auth_repository.dart';
 import '../repository/cloudFRepository.dart';
 import '../repository/firestoreAPI.dart';
@@ -17,11 +16,11 @@ class UserBloc implements Bloc{
       _cloudFirestoreRepository.updateVehicleData(vehicle);
 
   //Leer los datos de las cards
-  List<Vehicle> buildVehicles(
-          List<DocumentSnapshot> losnsListSnapshot
+  Future<Vehicle> buildVehicle(
+          String placa
           ) =>
-      _cloudFirestoreRepository.buildVehicles(
-          losnsListSnapshot);
+      _cloudFirestoreRepository.buildVehicle(
+          placa);
 
   
   //Añade un nuevo Lson a la base de datos

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parking_ticket/User/ui/screens/registrarVehiculo.dart';
-import 'package:parking_ticket/User/ui/screens/sign_in_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:parking_ticket/Vehicle/ui/screens/sign_in_screen.dart';
 
 import '../../../main.dart';
 
@@ -93,7 +92,7 @@ class Homepage extends StatelessWidget {
               height: screenHeight * 0.05,
             ),
             Container(
-              child: bottonLogin(),
+              child: grandButton(),
             )
           ],
         ),
@@ -129,7 +128,7 @@ class Homepage extends StatelessWidget {
     );
   }
 
-  Widget bottonLogin() {
+  Widget grandButton() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
       return TextButton(

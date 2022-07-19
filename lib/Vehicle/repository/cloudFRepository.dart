@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:parking_ticket/User/model/userVP.dart';
-import 'package:parking_ticket/User/model/vehiculos.dart';
 
+import '../model/vehiculos.dart';
 import 'firestoreAPI.dart';
 
 class CloudFirestoreRepository {
@@ -20,12 +19,9 @@ class CloudFirestoreRepository {
       _cloudFirestoreAPI.updateVehicleData(vehicle);
 
   //Leyendo datos de los vehículos
-  List<Vehicle> buildVehicles(
-          List<DocumentSnapshot> losnsListSnapshot) =>
-      _cloudFirestoreAPI.buildVehicles(
-          losnsListSnapshot);
+  Future<Vehicle> buildVehicle(
+          String placa) =>
+      _cloudFirestoreAPI.buildVehicle(
+          placa);
   
-  //Trayendo los datos del user
-  /* UserVP buildUserData(List<DocumentSnapshot> profileSnapshot) =>
-      _cloudFirestoreAPI.buildUserData(profileSnapshot); */
 }

@@ -4,17 +4,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
-import 'package:parking_ticket/User/bloc/bloc_user.dart';
-import 'package:parking_ticket/User/ui/screens/homePage.dart';
-import 'package:parking_ticket/User/ui/screens/registrarVehiculo.dart';
-import 'package:parking_ticket/User/ui/screens/salidaVehiculo.dart';
-import 'package:parking_ticket/User/ui/screens/sign_in_screen.dart';
 
+import 'Vehicle/bloc/bloc_user.dart';
+import 'Vehicle/ui/screens/homePage.dart';
+import 'Vehicle/ui/screens/parqueoVehiculo.dart';
+import 'Vehicle/ui/screens/salidaVehiculo.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-  );
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -24,11 +22,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        child:  MaterialApp(
-          title: 'Flutter Demo',
-          home:  SignInScreen(),
-        ),
-        bloc: UserBloc(),);
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        home: MyHomePage(),
+      ),
+      bloc: UserBloc( ) ,
+    );
   }
 }
 
@@ -40,7 +39,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int index = 1;
   final screen = [
-    RegistarVehiculo(),
+    ParqueoVehiculo(),
     Homepage(),
     SalidaVehiculo(),
   ];
@@ -48,20 +47,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: screen[index],
+        body: screen[index],
         bottomNavigationBar: NavigationBarTheme(
           data: const NavigationBarThemeData(
             indicatorColor: Colors.blue,
           ),
-          child:  NavigationBar(
+          child: NavigationBar(
             height: 60,
             backgroundColor: Colors.deepOrange,
             selectedIndex: index,
-            onDestinationSelected: (index)=> setState(()=>
-              this.index = index
-            ),
+            onDestinationSelected: (index) =>
+                setState(() => this.index = index),
             destinations: const [
-               NavigationDestination(
+              NavigationDestination(
                 icon: Icon(Icons.car_rental),
                 label: 'Ingreso',
               ),
@@ -70,10 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 label: 'Home',
               ),
               NavigationDestination(
-                  icon: Icon(
-                    Icons.car_crash,
-                  ),
-                  label: 'Salida')
+                icon: Icon(
+                  Icons.car_crash,
+                ),
+                label: 'Salida',
+              )
             ],
           ),
         ),

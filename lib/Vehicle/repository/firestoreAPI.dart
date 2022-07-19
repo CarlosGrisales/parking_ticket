@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:parking_ticket/User/model/userVP.dart';
-import 'package:parking_ticket/User/model/vehiculos.dart';
+
+import '../model/vehiculos.dart';
 
 class CloudFirestoreAPI {
   final String USERS = "users";
@@ -55,30 +55,39 @@ class CloudFirestoreAPI {
     DocumentReference refLsons = _db.collection("vehicles").doc(vehicle.placa);
     refLsons.set({
       'placa': vehicle.placa,
-      'cedulasConductor': vehicle.cedulasConductor,
+      'cedulasConductor': vehicle.cedulaConductor,
       "horaIngreso": vehicle.horaIngreso,
       "horaSalida": vehicle.horaSalida,
       "fechaSalida": vehicle.fechaSalida,
     });
   }
 
-  List<Vehicle> buildVehicles(List<DocumentSnapshot> losnsListSnapshot) {
-    List<Vehicle> vehicleList = [];
-
-    //var lsonList = getSongs();
-    losnsListSnapshot.forEach(
-      (l) {
-        Vehicle vehicle = Vehicle(
-          placa: (l.data() as dynamic)['placa'],
-          cedulasConductor: (l.data() as dynamic)['cedulasConductor'],
-          horaIngreso: (l.data() as dynamic)['horaIngreso'],
-          horaSalida: (l.data() as dynamic)['horaSalida'],
-          fechaSalida: (l.data() as dynamic)['fechaSalida'],
-        );
-        vehicleList.add(vehicle);
-      },
-    );
-    //vehicleList.shuffle();
-    return vehicleList;
+  Future<Vehicle> buildVehicle(String placa) async {
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    Query query = _firestore
+        .collection("vehicles")
+        .where("placa", isEqualTo: placa);
+    QuerySnapshot querySnapshot = await query.get();
+     Vehicle _vehicle = Vehicle(
+      cedulaConductor: "NONSET",
+      fechaSalida: "NONSET",
+      horaIngreso: "NONSET",
+      horaSalida: "NONSET",
+      placa: "NONSET",
+     );
+    if (querySnapshot.docs.length > 0) {
+      var element = querySnapshot.docs[0];
+       _vehicle = Vehicle(
+        cedulaConductor: (element.data() as dynamic)['cedulaConductor'],
+        fechaSalida: (element.data() as dynamic)['fechaSalida'],
+        horaIngreso: (element.data() as dynamic)['horaIngreso'],
+        horaSalida:(element.data() as dynamic)['horaSalida'] ,
+        placa: (element.data() as dynamic)['placa'],
+      );
+      
+    } else print("NO ENCONTRO NADA");
+    return _vehicle;
   }
+
+  
 }

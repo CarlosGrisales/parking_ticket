@@ -1,14 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:parking_ticket/User/bloc/bloc_user.dart';
-import 'package:parking_ticket/User/ui/screens/homePage.dart';
+import 'dart:io';
 
-class RegistarVehiculo extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
+import 'package:parking_ticket/Vehicle/model/vehiculos.dart';
+
+import '../../../Vehicle/ui/screens/ticketAlert.dart';
+import '../../bloc/bloc_user.dart';
+
+class SalidaVehiculo extends StatelessWidget {
   double screenHeight = 0, screenWidth = 0;
+  String _placa = "";
+  UserBloc _userBloc = UserBloc();
 
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
+    _userBloc = BlocProvider.of<UserBloc>(context);
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -17,7 +25,7 @@ class RegistarVehiculo extends StatelessWidget {
             children: [
               Center(
                 child: Container(
-                  height: screenHeight * 0.4,
+                  height: screenHeight * 0.3,
                   width: screenWidth * 0.8,
                   decoration: BoxDecoration(
                     color: Colors.deepOrange,
@@ -34,13 +42,11 @@ class RegistarVehiculo extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      textTitle('INGRESO DE VEHICULO'),
+                      textTitle('SALIDA DE VEHICULO'),
                       SizedBox(
                         height: screenHeight * 0.03,
                       ),
                       _placaTextField(),
-                      _conductorTextField(),
-                      _horaIngresoTextField(),
                     ],
                   ),
                 ),
@@ -85,47 +91,9 @@ class RegistarVehiculo extends StatelessWidget {
             /* hintText: 'Nombre', */
             labelText: 'Placa',
           ),
-          onChanged: (value) {},
-        ),
-      );
-    });
-  }
-
-  _conductorTextField() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 40,
-        ),
-        child: TextField(
-          keyboardType: TextInputType.name,
-          decoration: InputDecoration(
-            icon: Icon(Icons.person),
-            /* hintText: 'Nombre', */
-            labelText: 'Conductor',
-          ),
-          onChanged: (value) {},
-        ),
-      );
-    });
-  }
-
-  _horaIngresoTextField() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 40,
-        ),
-        child: TextField(
-          keyboardType: TextInputType.datetime,
-          decoration: InputDecoration(
-            icon: Icon(Icons.timelapse),
-            /* hintText: 'Nombre', */
-            labelText: 'Hora ingreso',
-          ),
-          onChanged: (value) {},
+          onChanged: (value) {
+            _placa = value;
+          },
         ),
       );
     });
@@ -150,15 +118,59 @@ class RegistarVehiculo extends StatelessWidget {
           ),
           padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15.0),
           child: Text(
-            'Registrar Ingreso',
+            'Validar Placa',
             style: TextStyle(
               color: Colors.white,
               fontFamily: "Lato",
             ),
           ),
         ),
-        onPressed: () {
-          
+        onPressed: () async {
+          Vehicle _vehiculoValidado = Vehicle(
+            cedulaConductor: "UNSET",
+            fechaSalida: "UNSET",
+            horaIngreso: "UNSET",
+            horaSalida: "UNSET",
+            placa: "UNSET",
+          );
+          await _userBloc.buildVehicle(_placa).then((value) {
+            _vehiculoValidado = value;
+            var aux= "PUEDE GENERAR TICKET";
+            if(_vehiculoValidado.horaIngreso=="0000"){
+              aux= "NO PUEDE GENERAR TICKET";
+            }; 
+
+
+           
+            
+
+
+
+            ///Esto es para actualizar el valor
+            Vehicle _nuevoVehiculo = Vehicle(
+              cedulaConductor: "999999",
+            fechaSalida: "20221025",
+            horaIngreso: "10.00", //6000
+            horaSalida: "12.30", //6150
+            placa: _vehiculoValidado.placa,
+            );
+            _userBloc.updateVehicleData(_nuevoVehiculo);
+            ///FIN DE ACTUALIZAR DATO
+       
+
+
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: ((context) => CustomAlertDialog(
+                      title:
+                          aux,
+                      description: "Informacion vehiculo y cobro",
+                    )),
+              ),
+            );
+          });
         },
       );
     });

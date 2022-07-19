@@ -5,8 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
-import 'package:parking_ticket/User/ui/screens/registrarVehiculo.dart';
-import 'package:parking_ticket/User/ui/screens/salidaVehiculo.dart';
 import 'package:parking_ticket/main.dart';
 import '../../../widgets/button_green.dart';
 import '../../../widgets/gradient_black.dart';
@@ -66,8 +64,9 @@ class _SignInScreen extends State<SignInScreen> {
                 children: <Widget>[
                   Flexible(
                     child: Container(
+                    
                       width: screenWidth * 0.5,
-                      child: Text(
+                      child: const Text(
                         "Bienvenido",
                         style: TextStyle(
                             fontSize: 30.0,
@@ -169,7 +168,7 @@ class _SignInScreen extends State<SignInScreen> {
         ),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Homepage()));
+              context, MaterialPageRoute(builder: (context) => MyHomePage()));
         },
       );
     });
