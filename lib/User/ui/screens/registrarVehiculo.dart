@@ -157,12 +157,7 @@ class RegistarVehiculo extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: ((context) => RegistarVehiculo()),
-            ),
-          );
+          
         },
       );
     });

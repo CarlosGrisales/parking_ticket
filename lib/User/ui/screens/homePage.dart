@@ -107,13 +107,13 @@ class Homepage extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {
+        onPressed: () {/* 
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: ((context) => RegistarVehiculo()),
             ),
-          );
+          ); */
         },
       );
     });

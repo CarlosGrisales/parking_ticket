@@ -144,7 +144,7 @@ class _SignInScreen extends State<SignInScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: ((context) => SalidaVehiculo()),
+              builder: ((context) => MyHomePage()),
             ),
           );
         },
