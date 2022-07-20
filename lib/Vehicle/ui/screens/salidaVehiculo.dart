@@ -133,11 +133,13 @@ class SalidaVehiculo extends StatelessWidget {
             horaSalida: "UNSET",
             placa: "UNSET",
           );
-          await _userBloc.buildVehicle(_placa).then((value) {
+          await _userBloc.buildVehicle(_placa).then((value) { // ESTE ES ¨PARA TRAER EL VEHICULO DE LA DB
             _vehiculoValidado = value;
             var aux= "PUEDE GENERAR TICKET";
-            if(_vehiculoValidado.horaIngreso=="0000"){
+            var auxdescription = "Informacion vehiculo y cobro";
+            if(_vehiculoValidado.horaIngreso=="NONSET"){
               aux= "NO PUEDE GENERAR TICKET";
+              auxdescription = "Placa registrada no encontrada";
             }; 
 
 
@@ -147,17 +149,20 @@ class SalidaVehiculo extends StatelessWidget {
 
 
             ///Esto es para actualizar el valor
+            ///Lo podrías utilizar para generar el ticket de salida
+            ///Es decir, actualizar el valor de horaIngreso y horaSalida
+            ///PERO debes enviar un objeto Vehicle con todos los datos instanciados
             Vehicle _nuevoVehiculo = Vehicle(
-              cedulaConductor: "999999",
+              cedulaConductor: _vehiculoValidado.cedulaConductor,
             fechaSalida: "20221025",
-            horaIngreso: "10.00", //6000
+            horaIngreso: "NONSET", //6000
             horaSalida: "12.30", //6150
             placa: _vehiculoValidado.placa,
             );
             _userBloc.updateVehicleData(_nuevoVehiculo);
             ///FIN DE ACTUALIZAR DATO
        
-
+            ///color(0xFF 000B0D)
 
 
             Navigator.push(
@@ -166,7 +171,8 @@ class SalidaVehiculo extends StatelessWidget {
                 builder: ((context) => CustomAlertDialog(
                       title:
                           aux,
-                      description: "Informacion vehiculo y cobro",
+                      description: auxdescription,
+                      vehicle: _vehiculoValidado,
                     )),
               ),
             );

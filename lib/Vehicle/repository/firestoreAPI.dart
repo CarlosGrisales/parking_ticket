@@ -63,6 +63,8 @@ class CloudFirestoreAPI {
   }
 
   Future<Vehicle> buildVehicle(String placa) async {
+    ///Este método trae el vehiculo de la base de datos.
+    ///Pide como parámetro la placa del carro, para saber qué carro traer
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     Query query = _firestore
         .collection("vehicles")

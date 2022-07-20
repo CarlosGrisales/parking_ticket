@@ -21,7 +21,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       elevation: 0,
-      backgroundColor: Colors.deepOrange,
+      backgroundColor: Color.fromARGB(255, 159, 189, 241),
       
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -45,16 +45,51 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
           ),
           Text('placa: ${widget.vehicle.placa}'),
           Text('Conductor: ${widget.vehicle.cedulaConductor}'),
-          Text('Hora de Entrada:'),
-          Text('Hora de saluda:'),
+          Text('Hora de Entrada: ${widget.vehicle.horaIngreso}'),
+          Text('Hora de salida: ${widget.vehicle.horaSalida}'),
           Text('Tiempo total:'),
           Text('total a pagar:'),
           Divider(
             height: 30,
           ),
-          Container(
-            width: 100,
-            height: 50,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                width: 80,
+                height: 40,
+                child: InkWell(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15.0),
+                    bottomRight: Radius.circular(15.0),
+                  ),
+                  highlightColor: Colors.grey[200],
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  
+                   
+                    child: Container(
+                    
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: Center(
+                      child: Text(
+                        "volver",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+            width: 80,
+            height: 40,
             child: InkWell(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(15.0),
@@ -69,20 +104,13 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
                 child: Container(
                 
                   decoration: BoxDecoration(
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(12.0),
-                    gradient: LinearGradient(
-                        colors: [
-                          Color.fromARGB(255, 38, 65, 218),
-                          Color.fromARGB(255, 5, 1, 255)
-                        ],
-                        begin: FractionalOffset(0.2, 0.0),
-                        end: FractionalOffset(1.0, 0.6),
-                        stops: [0.0, 0.6],
-                        tileMode: TileMode.clamp),
+                    
                   ),
                   child: Center(
                   child: Text(
-                    "OK",
+                    "generar",
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.normal,
@@ -92,6 +120,9 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
               ),
             ),
           ),
+            ],
+          ),
+          
           SizedBox(height: 20)
         ],
       ),
