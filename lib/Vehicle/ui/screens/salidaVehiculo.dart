@@ -9,7 +9,7 @@ import '../../bloc/bloc_user.dart';
 
 class SalidaVehiculo extends StatelessWidget {
   double screenHeight = 0, screenWidth = 0;
-  String _placa = "";
+  String _placa = "", _horaSalida = "";
   UserBloc _userBloc = UserBloc();
 
   @override
@@ -47,6 +47,7 @@ class SalidaVehiculo extends StatelessWidget {
                         height: screenHeight * 0.03,
                       ),
                       _placaTextField(),
+                      _horaSalidaTextField(),
                     ],
                   ),
                 ),
@@ -78,25 +79,40 @@ class SalidaVehiculo extends StatelessWidget {
   }
 
   Widget _placaTextField() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 40,
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 40,
+      ),
+      child: TextField(
+        keyboardType: TextInputType.name,
+        decoration: InputDecoration(
+          icon: Icon(Icons.time_to_leave),
+          /* hintText: 'Nombre', */
+          labelText: 'Placa',
         ),
-        child: TextField(
-          keyboardType: TextInputType.name,
-          decoration: InputDecoration(
-            icon: Icon(Icons.time_to_leave),
-            /* hintText: 'Nombre', */
-            labelText: 'Placa',
-          ),
-          onChanged: (value) {
-            _placa = value;
-          },
+        onChanged: (value) {
+          _placa = value;
+        },
+      ),
+    );
+  }
+
+   _horaSalidaTextField() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 40,
+      ),
+      child: TextField(
+        keyboardType: TextInputType.datetime,
+        decoration: InputDecoration(
+          icon: Icon(Icons.timelapse),
+          labelText: 'hora salida',
         ),
-      );
-    });
+        onChanged: (value) {
+          _horaSalida = value;
+        },
+      ),
+    );
   }
 
   Widget validar() {
@@ -125,20 +141,16 @@ class SalidaVehiculo extends StatelessWidget {
             horaSalida: "UNSET",
             placa: "UNSET",
           );
-          await _userBloc.buildVehicle(_placa).then((value) { // ESTE ES ¨PARA TRAER EL VEHICULO DE LA DB
+          await _userBloc.buildVehicle(_placa).then((value) {
+            // ESTE ES ¨PARA TRAER EL VEHICULO DE LA DB
             _vehiculoValidado = value;
-            var aux= "PUEDE GENERAR TICKET";
+            var aux = "SE GENERAR TICKET";
             var auxdescription = "Informacion vehiculo y cobro";
-            if(_vehiculoValidado.horaIngreso=="NONSET"){
-              aux= "NO PUEDE GENERAR TICKET";
+            if (_vehiculoValidado.horaIngreso == "NONSET") {
+              aux = "NO PUEDE GENERAR TICKET";
               auxdescription = "Placa registrada no encontrada";
-            }; 
-
-
-           
-            
-
-
+            }
+            ;
 
             ///Esto es para actualizar el valor
             ///Lo podrías utilizar para generar el ticket de salida
@@ -146,22 +158,22 @@ class SalidaVehiculo extends StatelessWidget {
             ///PERO debes enviar un objeto Vehicle con todos los datos instanciados
             Vehicle _nuevoVehiculo = Vehicle(
               cedulaConductor: _vehiculoValidado.cedulaConductor,
-            fechaSalida: "20221025",
-            horaIngreso: "NONSET", //6000
-            horaSalida: "12.30", //6150
-            placa: _vehiculoValidado.placa,
+              fechaSalida: "20221025",
+              horaIngreso: "NONSET", //6000
+              horaSalida: _horaSalida, //6150
+              placa: _vehiculoValidado.placa,
             );
             _userBloc.updateVehicleData(_nuevoVehiculo);
+
             ///FIN DE ACTUALIZAR DATO
-       
+
             ///color(0xFF 000B0D)
 
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: ((context) => CustomAlertDialog(
-                      title:
-                          aux,
+                      title: aux,
                       description: auxdescription,
                       vehicle: _vehiculoValidado,
                     )),
@@ -171,5 +183,43 @@ class SalidaVehiculo extends StatelessWidget {
         },
       );
     });
+  }
+
+  void main() {
+    String horaIngreso = "12.00";
+    String horaSalida = "18.45";
+    int instanciaEnParqueadero = 0;
+
+    instanciaEnParqueadero = calcularMinutos(horaIngreso, horaSalida);
+
+    print("Estuvo $instanciaEnParqueadero minutos en el parqueadero");
+  }
+
+  int calcularMinutos(horaIngreso, horaSalida) {
+    // Variables auxiliares
+    int minutos = 0;
+    int ingreso = 0, salida = 0;
+    var aux1 = [], aux2 = [];
+
+    //Se hace un split según el patrón "." para obtener horas y minutos
+    aux1 = horaIngreso.split(".");
+    aux2 = horaSalida.split(".");
+
+    //Se multiplican las horas por 60 para pasarlas a minutos
+    ingreso = int.parse(aux1[0]) * 60;
+    salida = int.parse(aux2[0]) * 60;
+
+    //Se suman los minutos
+    ingreso = ingreso + (int.parse(aux1[1]));
+    salida = salida + (int.parse(aux2[1]));
+
+    //Se calcula el tiempo de instancia restando el valor número de la hora de ingreso al de la hora de salida
+    minutos = salida - ingreso;
+
+    //Opcional esto se borra en producción
+    print(
+        "Estuvo en total $minutos minutos en el parqueadero, eso son ${minutos / 60} horas");
+
+    return minutos;
   }
 }

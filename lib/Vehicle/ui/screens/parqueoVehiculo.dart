@@ -180,7 +180,7 @@ class ParqueoVehiculo extends StatelessWidget {
         horizontal: 40,
       ),
       child: TextField(
-        keyboardType: TextInputType.name,
+        keyboardType: TextInputType.number,
         decoration: InputDecoration(
           icon: Icon(Icons.person),
           /* hintText: 'Nombre', */

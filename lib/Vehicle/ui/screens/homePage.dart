@@ -23,7 +23,7 @@ class Homepage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: screenWidth * 0.4,
@@ -62,7 +62,11 @@ class Homepage extends StatelessWidget {
                           height: screenHeight * 0.05,
                         ),
                         textinfo(
-                            'Descripción del rol operativo Usuario habilitado para gestionar el ingreso y salida de vehículos, recaudando y facturando a los clientes.')
+                            'Con este perfil puedes realizar el ingreso y la salida de los vehiculos que ingresan al parqueadero.'),
+                             textinfo(
+                            'El boton ingreso realiza la funcion de registrar los vehiculos en la base de datos.'),
+                             textinfo(
+                            'El boton salida recibe el numero de la placa y genera el ticket.'),
                       ],
                     ),
                   ),
@@ -102,7 +106,7 @@ class Homepage extends StatelessWidget {
             color: Colors.white,
             fontSize: screenHeight * 0.015,
             fontWeight: FontWeight.bold),
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.justify,
       ),
     );
   }
