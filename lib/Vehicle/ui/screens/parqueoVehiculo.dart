@@ -163,7 +163,6 @@ class ParqueoVehiculo extends StatelessWidget {
         keyboardType: TextInputType.name,
         decoration: InputDecoration(
           icon: Icon(Icons.time_to_leave),
-          /* hintText: 'Nombre', */
           labelText: 'Placa',
         ),
         onChanged: (value) {
@@ -182,7 +181,6 @@ class ParqueoVehiculo extends StatelessWidget {
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           icon: Icon(Icons.person),
-          /* hintText: 'Nombre', */
           labelText: 'Cedula Conductor',
         ),
         onChanged: (value) {
@@ -201,7 +199,6 @@ class ParqueoVehiculo extends StatelessWidget {
         keyboardType: TextInputType.datetime,
         decoration: InputDecoration(
           icon: Icon(Icons.timelapse),
-          /* hintText: 'Nombre', */
           labelText: 'Hora ingreso',
         ),
         onChanged: (value) {

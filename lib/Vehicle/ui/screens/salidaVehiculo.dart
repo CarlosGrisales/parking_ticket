@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:parking_ticket/Vehicle/model/vehiculos.dart';
-
 import '../../../Vehicle/ui/screens/ticketAlert.dart';
 import '../../bloc/bloc_user.dart';
 
@@ -87,7 +85,6 @@ class SalidaVehiculo extends StatelessWidget {
         keyboardType: TextInputType.name,
         decoration: InputDecoration(
           icon: Icon(Icons.time_to_leave),
-          /* hintText: 'Nombre', */
           labelText: 'Placa',
         ),
         onChanged: (value) {
@@ -97,7 +94,7 @@ class SalidaVehiculo extends StatelessWidget {
     );
   }
 
-   _horaSalidaTextField() {
+  _horaSalidaTextField() {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 40,
@@ -146,39 +143,51 @@ class SalidaVehiculo extends StatelessWidget {
             _vehiculoValidado = value;
             var aux = "SE GENERAR TICKET";
             var auxdescription = "Informacion vehiculo y cobro";
-            if (_vehiculoValidado.horaIngreso == "00.00") {
-              aux = "NO PUEDE GENERAR TICKET";
-              auxdescription = "Placa registrada no encontrada";
+            if (_vehiculoValidado.placa == "NONSET") {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => AlertDialog(
+                  title: Text('NO SE GENERA TICKET'),
+                  content: Text(
+                      'Placa registrada no existe, por favor intente nuevamente.'),
+                  actions: [
+                    TextButton(
+                      child: Text('ok'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                ),
+              ).then((result) {
+                print(result);
+              });
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: ((context) => CustomAlertDialog(
+                        title: aux,
+                        description: auxdescription,
+                        vehicle: _vehiculoValidado,
+                      )),
+                ),
+              );
             }
-            ;
 
             ///Esto es para actualizar el valor
             ///Lo podrías utilizar para generar el ticket de salida
             ///Es decir, actualizar el valor de horaIngreso y horaSalida
             ///PERO debes enviar un objeto Vehicle con todos los datos instanciados
-            
+
             _vehiculoValidado.horaSalida = _horaSalida;
             _userBloc.updateVehicleData(_vehiculoValidado);
 
             ///FIN DE ACTUALIZAR DATO
-
-            ///color(0xFF 000B0D)
-
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: ((context) => CustomAlertDialog(
-                      title: aux,
-                      description: auxdescription,
-                      vehicle: _vehiculoValidado,
-                    )),
-              ),
-            );
           });
         },
       );
     });
   }
-
-
 }
