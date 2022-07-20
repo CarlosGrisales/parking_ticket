@@ -49,7 +49,7 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
           Text(
               'Minutos totales: ${calcularMinutos(widget.vehicle.horaIngreso, widget.vehicle.horaSalida)}'),
           Text(
-              'total a pagar:${0.01666666666 * calcularMinutos(widget.vehicle.horaIngreso, widget.vehicle.horaSalida)}'),
+              'total a pagar: ${0.01666666666 * calcularMinutos(widget.vehicle.horaIngreso, widget.vehicle.horaSalida)}'),
           Divider(
             height: 30,
           ),
