@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           child: NavigationBar(
             height: 60,
-            backgroundColor: Colors.deepOrange,
+            backgroundColor: Color(0xFF01415B),
             selectedIndex: index,
             onDestinationSelected: (index) =>
                 setState(() => this.index = index),

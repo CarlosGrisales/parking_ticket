@@ -55,7 +55,7 @@ class CloudFirestoreAPI {
     DocumentReference refLsons = _db.collection("vehicles").doc(vehicle.placa);
     refLsons.set({
       'placa': vehicle.placa,
-      'cedulasConductor': vehicle.cedulaConductor,
+      'cedulaConductor': vehicle.cedulaConductor,
       "horaIngreso": vehicle.horaIngreso,
       "horaSalida": vehicle.horaSalida,
       "fechaSalida": vehicle.fechaSalida,

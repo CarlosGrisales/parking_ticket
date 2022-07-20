@@ -4,13 +4,11 @@ import 'package:parking_ticket/Vehicle/ui/screens/sign_in_screen.dart';
 
 import '../../../main.dart';
 
-Future <void> main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp( MyApp());
+  runApp(MyApp());
 }
-
-
 
 class Homepage extends StatelessWidget {
   double screenHeight = 0, screenWidth = 0;
@@ -27,23 +25,6 @@ class Homepage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => SignInScreen()),
-                      ));
-                },
-                icon: Icon(
-                  Icons.cancel_sharp,
-                  color: Color.fromARGB(255, 140, 139, 223),
-                ),
-                iconSize: screenHeight * 0.030,
-              ),
-            ),
                 Container(
                   width: screenWidth * 0.4,
                   height: screenHeight * 0.15,
@@ -62,7 +43,7 @@ class Homepage extends StatelessWidget {
                     height: screenHeight * 0.4,
                     width: screenWidth * 0.8,
                     decoration: BoxDecoration(
-                      color: Colors.deepOrange,
+                      color: Color(0xFF019587),
                       border: Border.all(color: Colors.white54, width: (2)),
                       borderRadius: BorderRadius.circular(20),
                       boxShadow: <BoxShadow>[
@@ -89,11 +70,9 @@ class Homepage extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: screenHeight * 0.05,
+              height: screenHeight * 0.1,
             ),
-            Container(
-              child: grandButton(),
-            )
+           
           ],
         ),
       ),
@@ -126,44 +105,5 @@ class Homepage extends StatelessWidget {
         textAlign: TextAlign.center,
       ),
     );
-  }
-
-  Widget grandButton() {
-    return StreamBuilder(
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return TextButton(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 38, 65, 218),
-                  Color.fromARGB(255, 5, 1, 255)
-                ],
-                begin: FractionalOffset(0.2, 0.0),
-                end: FractionalOffset(1.0, 0.6),
-                stops: [0.0, 0.6],
-                tileMode: TileMode.clamp),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15.0),
-          child: Text(
-            'Registrar Vehiculo',
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: "Lato",
-            ),
-          ),
-        ),
-        onPressed: () {
-          /* 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: ((context) => RegistarVehiculo()),
-            ),
-          ); */
-        },
-      );
-    });
   }
 }
