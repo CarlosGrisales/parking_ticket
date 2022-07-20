@@ -87,55 +87,54 @@ class ParqueoVehiculo extends StatelessWidget {
               fechaSalida: _fecha,
             );
             _userBloc.createVehicle(vehicle);
-            if (_placa == ""){
-               showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => AlertDialog(
-                title: Text('No Agregado'),
-                content: Text(
-                    'Debes ingresar una placa para poder registrar correctamente.'),
-                actions: [
-                  TextButton(
-                    child: Text('ok'),
-                    onPressed: () {
-                      Navigator.of(context,
-                      ).pop('ok');
-                    },
-                  )
-                ],
-              ),
-            ).then((result) {
-              print(result);
-            });
-
-            }else{
-                showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => AlertDialog(
-                title: Text('Agregado'),
-                content: Text(
-                    'vehiculo agregrado correctamente a la base de datos.'),
-                actions: [
-                  TextButton(
-                    child: Text('ok'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => MyHomePage()),
-                        ),
-                      );
-                    },
-                  )
-                ],
-              ),
-            ).then((result) {
-              print(result);
-            });
+            if (_placa == "") {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => AlertDialog(
+                  title: Text('No Agregado'),
+                  content: Text(
+                      'Debes ingresar una placa para poder registrar correctamente.'),
+                  actions: [
+                    TextButton(
+                      child: Text('ok'),
+                      onPressed: () {
+                        Navigator.of(
+                          context,
+                        ).pop('ok');
+                      },
+                    )
+                  ],
+                ),
+              ).then((result) {
+                print(result);
+              });
+            } else {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => AlertDialog(
+                  title: Text('Agregado'),
+                  content: Text(
+                      'vehiculo agregrado correctamente a la base de datos.'),
+                  actions: [
+                    TextButton(
+                      child: Text('ok'),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => MyHomePage()),
+                          ),
+                        );
+                      },
+                    )
+                  ],
+                ),
+              ).then((result) {
+                print(result);
+              });
             }
-           
           },
         )
       ]),
@@ -247,5 +246,4 @@ class ParqueoVehiculo extends StatelessWidget {
       ),
     );
   }
-
 }

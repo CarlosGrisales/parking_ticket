@@ -137,8 +137,8 @@ class SalidaVehiculo extends StatelessWidget {
           Vehicle _vehiculoValidado = Vehicle(
             cedulaConductor: "UNSET",
             fechaSalida: "UNSET",
-            horaIngreso: "UNSET",
-            horaSalida: "UNSET",
+            horaIngreso: "00.00",
+            horaSalida: "00.00",
             placa: "UNSET",
           );
           await _userBloc.buildVehicle(_placa).then((value) {
@@ -146,7 +146,7 @@ class SalidaVehiculo extends StatelessWidget {
             _vehiculoValidado = value;
             var aux = "SE GENERAR TICKET";
             var auxdescription = "Informacion vehiculo y cobro";
-            if (_vehiculoValidado.horaIngreso == "NONSET") {
+            if (_vehiculoValidado.horaIngreso == "00.00") {
               aux = "NO PUEDE GENERAR TICKET";
               auxdescription = "Placa registrada no encontrada";
             }
@@ -156,14 +156,9 @@ class SalidaVehiculo extends StatelessWidget {
             ///Lo podrías utilizar para generar el ticket de salida
             ///Es decir, actualizar el valor de horaIngreso y horaSalida
             ///PERO debes enviar un objeto Vehicle con todos los datos instanciados
-            Vehicle _nuevoVehiculo = Vehicle(
-              cedulaConductor: _vehiculoValidado.cedulaConductor,
-              fechaSalida: "20221025",
-              horaIngreso: "NONSET", //6000
-              horaSalida: _horaSalida, //6150
-              placa: _vehiculoValidado.placa,
-            );
-            _userBloc.updateVehicleData(_nuevoVehiculo);
+            
+            _vehiculoValidado.horaSalida = _horaSalida;
+            _userBloc.updateVehicleData(_vehiculoValidado);
 
             ///FIN DE ACTUALIZAR DATO
 
@@ -185,41 +180,5 @@ class SalidaVehiculo extends StatelessWidget {
     });
   }
 
-  void main() {
-    String horaIngreso = "12.00";
-    String horaSalida = "18.45";
-    int instanciaEnParqueadero = 0;
 
-    instanciaEnParqueadero = calcularMinutos(horaIngreso, horaSalida);
-
-    print("Estuvo $instanciaEnParqueadero minutos en el parqueadero");
-  }
-
-  int calcularMinutos(horaIngreso, horaSalida) {
-    // Variables auxiliares
-    int minutos = 0;
-    int ingreso = 0, salida = 0;
-    var aux1 = [], aux2 = [];
-
-    //Se hace un split según el patrón "." para obtener horas y minutos
-    aux1 = horaIngreso.split(".");
-    aux2 = horaSalida.split(".");
-
-    //Se multiplican las horas por 60 para pasarlas a minutos
-    ingreso = int.parse(aux1[0]) * 60;
-    salida = int.parse(aux2[0]) * 60;
-
-    //Se suman los minutos
-    ingreso = ingreso + (int.parse(aux1[1]));
-    salida = salida + (int.parse(aux2[1]));
-
-    //Se calcula el tiempo de instancia restando el valor número de la hora de ingreso al de la hora de salida
-    minutos = salida - ingreso;
-
-    //Opcional esto se borra en producción
-    print(
-        "Estuvo en total $minutos minutos en el parqueadero, eso son ${minutos / 60} horas");
-
-    return minutos;
-  }
 }

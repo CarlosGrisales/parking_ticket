@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         home: MyHomePage(),
       ),
@@ -50,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: screen[index],
         bottomNavigationBar: NavigationBarTheme(
           data: const NavigationBarThemeData(
-            indicatorColor: Colors.blue,
+            indicatorColor: Colors.white,
           ),
           child: NavigationBar(
             height: 60,

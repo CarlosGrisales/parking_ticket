@@ -18,7 +18,14 @@ class CustomAlertDialog extends StatefulWidget {
 
 class _CustomAlertDialogState extends State<CustomAlertDialog> {
   @override
+
+
+
   Widget build(BuildContext context) {
+
+ 
+
+
     return Dialog(
       elevation: 0,
       backgroundColor: Color.fromARGB(255, 159, 189, 241),
@@ -47,8 +54,8 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
           Text('Conductor: ${widget.vehicle.cedulaConductor}'),
           Text('Hora de Entrada: ${widget.vehicle.horaIngreso}'),
           Text('Hora de salida: ${widget.vehicle.horaSalida}'),
-          Text('Tiempo total:'),
-          Text('total a pagar:'),
+          Text('Minutos totales: ${calcularMinutos(widget.vehicle.horaIngreso,widget.vehicle.horaSalida)}'),
+          Text('total a pagar:${0.01666666666 * calcularMinutos(widget.vehicle.horaIngreso,widget.vehicle.horaSalida)}'), 
           Divider(
             height: 30,
           ),
@@ -127,5 +134,40 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
         ],
       ),
     );
+
   }
+
+
+int calcularMinutos(horaIngreso,horaSalida){
+  
+  // Variables auxiliares
+  int minutos =0;
+  int ingreso=0, salida=0;
+  var aux1=[], aux2=[];
+  
+  //Se hace un split según el patrón "." para obtener horas y minutos
+  aux1 = horaIngreso.split(".");
+  aux2= horaSalida.split(".");
+  
+  
+  //Se multiplican las horas por 60 para pasarlas a minutos
+  ingreso = int.parse(aux1[0])*60;
+  salida = int.parse(aux2[0])*60;
+  
+  
+  //Se suman los minutos 
+  ingreso = ingreso+(int.parse(aux1[1]));
+  salida = salida+(int.parse(aux2[1]));
+  
+  //Se calcula el tiempo de instancia restando el valor número de la hora de ingreso al de la hora de salida
+  minutos = salida - ingreso;
+  
+  //Opcional esto se borra en producción
+  print("Estuvo en total $minutos minutos en el parqueadero, eso son ${minutos/60} horas");
+ 
+  return minutos;
+
+  
+}  
+
 }
